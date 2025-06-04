@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binance USDT Airdrop Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f0b90b;
+            --primary-dark: #e6a800;
+            --dark: #1e2026;
+            --light: #f8f9fa;
+            --gray: #707a8a;
+            --success: #02c076;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #0b0e11;
+            color: var(--light);
+            background-image: radial-gradient(circle at 50% 50%, #1a2639 0%, #0b0e11 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .logo {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .logo img {
+            height: 40px;
+        }
+        
+        .card {
+            background: linear-gradient(135deg, #1e2329 0%, #171b21 100%);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(240, 185, 11, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+            z-index: 0;
+        }
+        
+        .card-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-align: center;
+            color: var(--primary);
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--light);
+        }
+        
+        p {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .usdt-amount {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--success);
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 0 0 10px rgba(2, 192, 118, 0.3);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            margin: 10px 0;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--dark);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(240, 185, 11, 0.3);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(240, 185, 11, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background-color: #2b3139;
+            border: 1px solid #3c424a;
+            color: var(--light);
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(240, 185, 11, 0.2);
+        }
+        
+        .progress-container {
+            margin: 30px 0;
+        }
+        
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #2b3139;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--success) 100%);
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background-color: rgba(2, 192, 118, 0.2);
+            color: var(--success);
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--primary);
+            opacity: 0;
+        }
+        
+        .status-message {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(240, 185, 11, 0.2);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .success-icon {
+            text-align: center;
+            font-size: 60px;
+            color: var(--success);
+            margin: 20px 0;
+            animation: bounceIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes bounceIn {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(240, 185, 11, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(240, 185, 11, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(240, 185, 11, 0); }
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 200px;
+            background-color: #2b3139;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+            border: 1px solid #3c424a;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .share-count {
+            text-align: center;
+            font-size: 14px;
+            color: var(--gray);
+            margin-top: 10px;
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Binance_logo.svg/1280px-Binance_logo.svg.png" alt="Binance Logo">
+        </div>
+        
+        <div class="card animate__animated animate__fadeIn">
+            <div class="card-content">
+                <!-- Step 1: Get Button -->
+                <div class="step active" id="step1">
+                    <h1>Binance USDT Airdrop</h1>
+                    <h2>Limited Time Offer</h2>
+                    <p>Binance is distributing 5,000,000 USDT to celebrate our 10 million users milestone. Complete simple tasks to claim your share!</p>
+                    <div class="usdt-amount animate__animated animate__pulse animate__infinite">50 USDT</div>
+                    <p>Available for the first 10,000 participants only. Distribution ends in <span style="color: var(--primary);">03:24:17</span></p>
+                    <button class="btn btn-primary" onclick="nextStep('step1', 'step2')">GET USDT NOW</button>
+                    <p style="text-align: center; font-size: 12px;">Already 8,742 participants claimed</p>
+                </div>
+                
+                <!-- Step 2: Continue -->
+                <div class="step" id="step2">
+                    <h1>Verify Eligibility</h1>
+                    <p>To participate in this airdrop, you need to verify your eligibility by completing simple steps.</p>
+                    <div style="background-color: rgba(240, 185, 11, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <p style="color: var(--primary); font-weight: 500;">Complete all steps to receive 50 USDT</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="nextStep('step2', 'step3')">CONTINUE</button>
+                </div>
+                
+                <!-- Step 3: Binance -->
+                <div class="step" id="step3">
+                    <h1>Check Eligibility</h1>
+                    <p>To receive your USDT reward, please click the Check Eligibility button to Verify.</p>
+                    <div style="text-align: center; margin: 20px 0;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Binance_logo.svg/1280px-Binance_logo.svg.png" alt="Binance" style="height: 60px; margin-bottom: 10px;">
+                        <p>Binance - Trusted Crypto Exchange</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="nextStep('step3', 'step4')">Check Eligibility</button>
+                </div>
+                
+                <!-- Step 4: Enter Binance UID -->
+                <div class="step" id="step4">
+                    <h1>Enter Your Binance UID</h1>
+                    <p>We will send your USDT reward directly to your Binance account.</p>
+                    <div class="form-group">
+                        <label for="uid">Binance UID</label>
+                        <input type="text" id="uid" placeholder="Enter your Binance UID">
+                    </div>
+                    <div class="tooltip" style="margin-bottom: 20px;">
+                        <p style="color: var(--primary);">How to find my Binance UID? <span style="color: var(--gray);">(Click here)</span></p>
+                        <span class="tooltiptext">1. Open Binance App<br>2. Go to your Profile<br>3. Your UID is displayed at the top</span>
+                    </div>
+                    <button class="btn btn-primary" id="verifyBtn" onclick="verifyUID()">VERIFY & CONTINUE</button>
+                </div>
+                
+                <!-- Step 5: Share WhatsApp -->
+                <div class="step" id="step5">
+                    <h1>Share to Claim USDT</h1>
+                    <p>Share this airdrop with your friends to complete the verification process and receive your 50 USDT reward.</p>
+                    
+                    <div class="progress-container">
+                        <div class="progress-text">
+                            <span>Verification Progress</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                    
+                    <p style="text-align: center;">Share this message to <span style="color: var(--primary); font-weight: 500;">1 group or 3 friends</span> on WhatsApp to complete verification.</p>
+                    
+                    <button class="btn btn-primary pulse" onclick="shareWhatsApp()">SHARE ON WHATSAPP</button>
+                    
+                    <div class="share-count" id="shareCount">
+                        Shares completed: <span id="completedShares">0</span>/4 (25% per share)
+                    </div>
+                    
+                    <div class="hidden" id="afterShare">
+                        <div class="status-message">
+                            <p>Verification in progress...</p>
+                        </div>
+                        <button class="btn btn-outline" onclick="checkVerification()">CHECK VERIFICATION</button>
+                    </div>
+                </div>
+                
+                <!-- Step 6: Sending USDT -->
+                <div class="step" id="step6">
+                    <h1>Processing Your Reward</h1>
+                    <div class="loading">
+                        <div class="spinner"></div>
+                    </div>
+                    <div class="status-message">
+                        <p>Sending <span style="color: var(--success); font-weight: 500;">50 USDT</span> to your Binance account</p>
+                        <p id="transactionStatus">Initializing transaction...</p>
+                    </div>
+                </div>
+                
+                <!-- Step 7: Success -->
+                <div class="step" id="step7">
+                    <div class="success-icon">✓</div>
+                    <h1>Congratulations!</h1>
+                    <p style="text-align: center;">You have successfully claimed your <span style="color: var(--success); font-weight: 600;">50 USDT</span> reward.</p>
+                    
+                    <div style="background-color: rgba(2, 192, 118, 0.1); padding: 15px; border-radius: 8px; margin: 20px 0;">
+                        <p style="color: var(--success); text-align: center; font-weight: 500;">
+                            Transaction ID: <span id="txId">0x7a3b...f2e1</span><br>
+                            Status: <span style="color: var(--success);">Completed</span>
+                        </p>
+                    </div>
+                    
+                    <p style="text-align: center; font-size: 12px;">The USDT will be credited to your Binance account within 24 hours.</p>
+                    
+                    <button class="btn btn-primary" onclick="redirectToOffer()">CLAIM ADDITIONAL BONUS</button>
+                </div>
+            </div>
+        </div>
+        
+        <p style="text-align: center; font-size: 12px; color: var(--gray); margin-top: 20px;">
+            © 2023 Binance. All rights reserved.
+        </p>
+    </div>
+
+    <script>
+        let currentStep = 'step1';
+        let sharesCompleted = 0;
+        let progress = 0;
+        
+        function nextStep(current, next) {
+            document.getElementById(current).classList.remove('active');
+            document.getElementById(next).classList.add('active');
+            currentStep = next;
+            
+            if(next === 'step6') {
+                simulateTransaction();
+            }
+        }
+        
+        function verifyUID() {
+            const uid = document.getElementById('uid').value;
+            const btn = document.getElementById('verifyBtn');
+            
+            if(!uid) {
+                alert('Please enter your Binance UID');
+                return;
+            }
+            
+            btn.innerHTML = 'Verifying...';
+            btn.disabled = true;
+            
+            // Simulate verification
+            setTimeout(() => {
+                btn.innerHTML = 'VERIFIED <span class="badge">✓</span>';
+                setTimeout(() => {
+                    nextStep('step4', 'step5');
+                }, 1000);
+            }, 2000);
+        }
+        
+        function shareWhatsApp() {
+            const message = "🚀 Hurry up! Binance is giving away FREE USDT! I just claimed 50 USDT. Claim yours before it's all gone! 👉 " + window.location.href;
+            const url = "https://wa.me/?text=" + encodeURIComponent(message);
+            
+            window.open(url, '_blank');
+            
+            // Update progress
+            sharesCompleted++;
+            progress = Math.min(sharesCompleted * 25, 100);
+            
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercent').innerHTML = progress + '%';
+            document.getElementById('completedShares').innerHTML = sharesCompleted;
+            
+            if(sharesCompleted >= 1) {
+                document.getElementById('afterShare').classList.remove('hidden');
+            }
+        }
+        
+        function checkVerification() {
+            if(progress >= 100) {
+                nextStep('step5', 'step6');
+            } else {
+                alert('Please complete the sharing to verify your account.');
+            }
+        }
+        
+        function simulateTransaction() {
+            const status = document.getElementById('transactionStatus');
+            const steps = [
+                "Connecting to Binance network...",
+                "Verifying recipient address...",
+                "Approving transaction...",
+                "Processing USDT transfer...",
+                "Confirming transaction..."
+            ];
+            
+            let i = 0;
+            const interval = setInterval(() => {
+                status.innerHTML = steps[i];
+                i++;
+                
+                if(i >= steps.length) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        createConfetti();
+                        nextStep('step6', 'step7');
+                    }, 1500);
+                }
+            }, 1500);
+        }
+        
+        function createConfetti() {
+            const colors = ['#f0b90b', '#02c076', '#ffffff', '#f0b90b', '#02c076'];
+            
+            for(let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.transform = 'rotate(' + Math.random() * 360 + 'deg)';
+                
+                document.body.appendChild(confetti);
+                
+                const animationDuration = Math.random() * 3 + 2;
+                
+                confetti.style.animation = `
+                    fadeIn 0.1s ease forwards,
+                    fall ${animationDuration}s linear forwards
+                `;
+                
+                confetti.style.setProperty('--y-end', Math.random() * 100 + 100 + 'vh');
+                confetti.style.setProperty('--x-end', (Math.random() - 0.5) * 100 + 'vw');
+                
+                setTimeout(() => {
+                    confetti.remove();
+                }, animationDuration * 1000);
+            }
+            
+            // Add CSS for animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fall {
+                    to {
+                        transform: translate(var(--x-end), var(--y-end)) rotate(360deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        function redirectToOffer() {
+            window.location.href = "https://www.profitableratecpm.com/t4hstkjr2y?key=850fd35b33e232c0badfb6e422356238";
+        }
+    </script>
+</body>
+</html>
